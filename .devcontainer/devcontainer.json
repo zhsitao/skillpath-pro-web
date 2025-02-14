@@ -21,7 +21,7 @@
 	"postCreateCommand": "chmod +x .devcontainer/setup.sh && sh .devcontainer/setup.sh",
 
 	// Use 'postStartCommand' to run commands after the container is created.
-	"postStartCommand": "nohup bash -c 'mvn spring-boot:run -f /workspaces/skillpath-pro-api/pom.xml >> /workspaces/skillpath-pro-web/skillpath-pro-api.log 2>&1' &",
+	"postStartCommand": "nohup bash -c 'mvn spring-boot:run -f /workspaces/skillpath-pro-api/pom.xml >> /workspaces/skillpath-pro-web/skillpath-pro-api.log 2>&1 &'",
 
 	// Configure tool-specific properties.
 	"customizations": {
