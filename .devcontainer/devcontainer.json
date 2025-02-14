@@ -3,18 +3,26 @@
 {
 	"name": "Node.js & Java",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "web",
-	"workspaceFolder": "/workspaces/skillpath-pro-web",
+	"image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "none",
+			"installMaven": true
+		},
+		"ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [ 5173, 8080 ],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "chmod +x .devcontainer/setup.sh && bash .devcontainer/setup.sh",
+
+	// Use 'postStartCommand' to run commands after the container is created.
+	"postStartCommand": "nohup bash -c 'mvn spring-boot:run -f /workspaces/skillpath-pro-api/pom.xml &'",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -33,6 +41,11 @@
 		// Configure properties specific to VS Code.
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"vmware.vscode-boot-dev-pack",
+				"dbaeumer.vscode-eslint"
+			],
+			// VSCode configuration
 			"settings": {
 				"editor.mouseWheelZoom": true,
 				"java.maven.downloadSources": true,

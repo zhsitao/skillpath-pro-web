@@ -17,5 +17,5 @@ fi
 
 # backend repo install
 if [ -f "/workspaces/skillpath-pro-api/pom.xml" ]; then
-  mvn clean install -f /workspaces/skill-api/pom.xml
+  mvn clean install -f /workspaces/skillpath-pro-api/pom.xml
 fi
