@@ -5,7 +5,7 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "web",
-	"workspaceFolder": "/workspace/skillpath-pro-web",
+	"workspaceFolder": "/workspaces/skillpath-pro-web",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -18,6 +18,14 @@
 
 	// Configure tool-specific properties.
 	"customizations": {
+		// Add additional repository permissions.
+		"codespaces": {
+			"repositories": {
+				"zhsitao/skillpath-pro-api": {
+					"permissions": "write-all"
+				}
+			}
+		},
 		// Configure properties specific to VS Code.
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
