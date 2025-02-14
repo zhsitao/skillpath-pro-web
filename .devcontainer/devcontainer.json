@@ -21,7 +21,7 @@
 	"postCreateCommand": "chmod +x .devcontainer/setup.sh && sh .devcontainer/setup.sh",
 
 	// Use 'postStartCommand' to run commands after the container is created.
-	"postStartCommand": "nohup mvn spring-boot:run -f /workspaces/skillpath-pro-api/pom.xml >> /workspaces/skillpath-pro-web/skillpath-pro-api.log 2>&1 >/dev/null &",
+	"postStartCommand": "nohup java -jar /workspaces/skillpath-pro-api/target/skillpath-pro-api-0.0.1-SNAPSHOT.jar > /workspaces/skillpath-pro-web/skillpath-pro-api.log 2>&1 && rm -f nohup.out &",
 
 	// Configure tool-specific properties.
 	"customizations": {
