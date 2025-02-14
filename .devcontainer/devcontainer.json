@@ -22,7 +22,11 @@
 		"codespaces": {
 			"repositories": {
 				"zhsitao/skillpath-pro-api": {
-					"permissions": "write-all"
+					"permissions": {
+						"contents": "write",
+						"issues": "write",
+						"pull_requests": "write"
+					}
 				}
 			}
 		},
