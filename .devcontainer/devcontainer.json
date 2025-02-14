@@ -3,21 +3,18 @@
 {
 	"name": "Node.js & Java",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "web",
+	"workspaceFolder": "/workspace/skillpath-pro-web",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "latest",
-			"installMaven": true
-		}
-	},
+	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [ 5173, 8080 ],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "chmod +x .devcontainer/setup.sh && bash .devcontainer/setup.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -29,7 +26,7 @@
 				"java.maven.downloadSources": true,
 				"editor.formatOnSave": true,
 				"git.autofetch": true,
-				"github.copilot.nextEditSuggestions.enabled":true,
+				"github.copilot.nextEditSuggestions.enabled": true,
 				"java.configuration.updateBuildConfiguration": "automatic",
 				"redhat.telemetry.enabled": false,
 				"java.compile.nullAnalysis.mode": "disabled"

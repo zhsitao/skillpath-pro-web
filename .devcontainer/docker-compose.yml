@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+    container_name: skillpath-pro-web
+    working_dir: /workspace/skillpath-pro-web
+    volumes:
+      - .:/workspace/skillpath-pro-web
+    ports:
+      - "5173:5173"
+    command: sleep infinity
+
+  api:
+    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    container_name: skillpath-pro-api
+    working_dir: /workspace/skillpath-pro-api
+    volumes:
+      - ../skillpath-pro-api:/workspace/skillpath-pro-api
+    ports:
+      - "8080:8080"
+    command: sleep infinity
