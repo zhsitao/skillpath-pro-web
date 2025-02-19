@@ -1,0 +1,62 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Node.js & Java",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "none",
+			"installMaven": true
+		},
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [ 5173, 8080 ],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "chmod +x .devcontainer/setup.sh && sh .devcontainer/setup.sh",
+
+	// Use 'postStartCommand' to run commands after the container is created.
+	"postStartCommand": "nohup java -jar /workspaces/skillpath-pro-api/target/skillpath-pro-api-0.0.1-SNAPSHOT.jar > /workspaces/skillpath-pro-web/skillpath-pro-api.log 2>&1 && rm -f nohup.out &",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Add additional repository permissions.
+		"codespaces": {
+			"repositories": {
+				"zhsitao/skillpath-pro-api": {
+					"permissions": {
+						"contents": "write",
+						"issues": "write",
+						"pull_requests": "write"
+					}
+				}
+			}
+		},
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"dbaeumer.vscode-eslint"
+			],
+			// VSCode configuration
+			"settings": {
+				"editor.mouseWheelZoom": true,
+				"java.maven.downloadSources": true,
+				"editor.formatOnSave": true,
+				"git.autofetch": true,
+				"github.copilot.nextEditSuggestions.enabled": true,
+				"java.configuration.updateBuildConfiguration": "automatic",
+				"redhat.telemetry.enabled": false,
+				"java.compile.nullAnalysis.mode": "disabled"
+			}
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
