@@ -5,6 +5,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePassword = (password) =>
@@ -12,6 +13,9 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccessMessage('');
+
     if (!validateEmail(email)) {
       setError('Invalid email format.');
       return;
@@ -20,37 +24,45 @@ const Signup = () => {
       setError('Password must contain at least 8 characters, including one uppercase letter and one number.');
       return;
     }
+
     try {
       const response = await signup({ email, password });
-      if (response.success) {
-        alert('Signup successful! Please check your email for confirmation.');
+      if (response?.success) {
+        setSuccessMessage('Signup successful! Please check your email for confirmation.');
       } else {
         setError(response.message || 'Signup failed.');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err.message || 'An unexpected error occurred.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
+          id="email"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
       </div>
       <div>
-        <label>Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
+          id="password"
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
       <button type="submit">Sign Up</button>
     </form>
   );
