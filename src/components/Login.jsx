@@ -26,6 +26,7 @@ const Login = () => {
       const response = await login({ email, password });
       if (response?.success) {
         localStorage.setItem('token', response.token); // Store JWT token
+        console.log('Redirecting to dashboard...');
         navigate('/dashboard'); // Redirect to dashboard
       } else {
         setError(response.message || 'Login failed.');
