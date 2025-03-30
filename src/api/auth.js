@@ -32,7 +32,7 @@ export const login = async (data) => {
       throw new Error(errorText || 'Login request failed.');
     }
 
-    return await response.json();
+    return await response.json(); // Ensure the response is parsed as JSON
   } catch (error) {
     console.error('Login API error:', error);
     return { success: false, message: error.message || 'Network error' };
