@@ -4,18 +4,21 @@ export const signup = async (data) => {
   try {
     const response = await fetch(`${BASE_URL}/auth/signup`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     });
 
     if (!response.ok) {
-      throw new Error('Signup request failed.');
+      const errorText = await response.text(); // Handle plain text error response
+      throw new Error(errorText || 'Signup request failed.');
     }
 
-    return await response.json();
+    return await response.text(); // Handle plain text success response
   } catch (error) {
     console.error('Signup API error:', error);
-    return { success: false, message: error.message || 'Network error' };
+    throw error;
   }
 };
 
@@ -23,7 +26,9 @@ export const login = async (data) => {
   try {
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     });
 
@@ -32,10 +37,10 @@ export const login = async (data) => {
       throw new Error(errorText || 'Login request failed.');
     }
 
-    return await response.json(); // Ensure the response is parsed as JSON
+    return await response.json();
   } catch (error) {
     console.error('Login API error:', error);
-    return { success: false, message: error.message || 'Network error' };
+    throw error;
   }
 };
 
