@@ -78,16 +78,29 @@ const Dashboard = () => {
         marginBottom: '20px'
       }}>
         <h1>Your Skill Dashboard</h1>
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer'
-          }}
-        >
-          Logout
-        </button>
+        <div>
+          <button
+            onClick={() => navigate('/learning')}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              cursor: 'pointer',
+              marginRight: '10px'
+            }}
+          >
+            Learning Resources
+          </button>
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              cursor: 'pointer'
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Role Tabs */}
