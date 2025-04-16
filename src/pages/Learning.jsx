@@ -169,84 +169,70 @@ const Learning = () => {
 
   if (!selectedRoleId) {
     return (
-      <div style={{ maxWidth: '800px', margin: '100px auto', textAlign: 'center' }}>
-        <h2>No Role Selected</h2>
-        <p>Please select a role in the Dashboard first to view relevant learning resources.</p>
-        <button
-          onClick={() => navigate('/dashboard')}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer',
-            marginTop: '20px'
-          }}
-        >
-          Go to Dashboard
-        </button>
+      <div className="container">
+        <div className="card" style={{ maxWidth: '800px', margin: '100px auto', textAlign: 'center' }}>
+          <h2>No Role Selected</h2>
+          <p>Please select a role in the Dashboard first to view relevant learning resources.</p>
+          <button
+            onClick={() => navigate('/dashboard', { replace: true })}
+            style={{ marginTop: '20px' }}
+          >
+            Go to Dashboard
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <div style={{ marginBottom: '20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <h1>Learning Resources</h1>
-          <button
-            onClick={() => navigate('/dashboard')}
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
-          >
-            Back to Dashboard
-          </button>
-        </div>
+    <div className="container">
+      <div className="flex flex-between flex-center" style={{ marginBottom: '2rem' }}>
+        <h1 style={{ margin: 0 }}>Learning Resources</h1>
+        <button className="secondary" onClick={() => navigate('/dashboard')}>
+          Back to Dashboard
+        </button>
+      </div>
 
-        {/* Filters at the top */}
+      {/* Filters */}
+      <div className="card" style={{ marginBottom: '2rem' }}>
         <div style={{ 
-          display: 'flex', 
-          gap: '20px', 
-          marginBottom: '20px',
-          padding: '15px',
-          backgroundColor: '#f5f5f5',
-          borderRadius: '5px',
-          alignItems: 'center'
+          display: 'grid',
+          gap: '1.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          alignItems: 'end'
         }}>
           <div>
-            <label style={{ marginRight: '10px' }}>
+            <label className="form-group">
               <input
                 type="checkbox"
                 checked={freeOnly}
                 onChange={(e) => setFreeOnly(e.target.checked)}
+                style={{ width: 'auto', margin: '0 8px 0 0' }}
               />
               Free Resources Only
             </label>
           </div>
 
-          <div>
-            <label style={{ marginRight: '10px' }}>Skills:</label>
+          <div className="form-group">
+            <label>Skills</label>
             <select
               value={selectedSkill}
               onChange={(e) => setSelectedSkill(e.target.value)}
-              style={{ padding: '5px' }}
+              style={{ margin: 0 }}
             >
               <option value="">All Skills</option>
               {skillGaps.map(skill => (
-                <option key={skill} value={skill}>
-                  {skill}
-                </option>
+                <option key={skill} value={skill}>{skill}</option>
               ))}
             </select>
           </div>
 
-          <div>
-            <label style={{ marginRight: '10px' }}>Type:</label>
+          <div className="form-group">
+            <label>Type</label>
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              style={{ padding: '5px' }}
+              style={{ margin: 0 }}
             >
               <option value="">All Types</option>
               <option value="Course">Course</option>
@@ -255,86 +241,85 @@ const Learning = () => {
             </select>
           </div>
 
-          <div>
-            <label style={{ marginRight: '10px' }}>Max Duration:</label>
+          <div className="form-group">
+            <label>Max Duration (hours)</label>
             <input
               type="number"
               value={maxDuration}
               onChange={(e) => setMaxDuration(e.target.value)}
-              style={{ width: '70px', padding: '5px' }}
+              style={{ margin: 0 }}
               min="0"
             />
-            <span style={{ marginLeft: '5px' }}>hours</span>
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '20px' }}>
+      <div style={{ display: 'grid', gap: '2rem', gridTemplateColumns: '1fr 300px' }}>
         {/* Main content - Course list */}
-        <div style={{ flex: '1' }}>
+        <div>
           <h2>Available Courses</h2>
           {loading ? (
-            <p>Loading...</p>
+            <div style={{ textAlign: 'center', padding: '2rem' }}>
+              <h3>Loading...</h3>
+            </div>
           ) : skillGaps.length === 0 ? (
-            <p>Great job! You've met all required skills.</p>
+            <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+              <h3 style={{ margin: 0 }}>Great job! You've met all required skills.</h3>
+            </div>
           ) : filteredCourses.length === 0 ? (
-            <p>No courses match your current filters.</p>
+            <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+              <h3 style={{ margin: 0 }}>No courses match your current filters.</h3>
+            </div>
           ) : (
             filteredCourses.map(course => (
               <div
                 key={course.id}
+                className="card"
                 style={{
-                  padding: '15px',
-                  marginBottom: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '5px'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '1rem'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: '0 0 5px 0' }}>{course.name}</h3>
-                    <p style={{ margin: '0', color: '#666' }}>
-                      {course.provider} • {course.duration} • {course.type}
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ margin: 0 }}>{course.name}</h3>
+                  <p style={{ margin: '0.5rem 0', color: '#666' }}>
+                    {course.provider} • {course.duration} hours • {course.type}
+                  </p>
+                  <p style={{ 
+                    margin: '0.5rem 0 0 0', 
+                    color: course.cost === 0 ? '#059669' : '#666',
+                    fontWeight: course.cost === 0 ? 500 : 400
+                  }}>
+                    {course.cost === 0 ? 'Free' : `$${course.cost}`}
+                  </p>
+                  {course.description && (
+                    <p style={{ margin: '0.5rem 0', color: '#666', fontSize: '0.9em' }}>
+                      {course.description}
                     </p>
-                    <p style={{ margin: '5px 0 0 0', color: course.cost === 0 ? '#4CAF50' : '#666' }}>
-                      {course.cost === 0 ? 'Free' : `$${course.cost}`}
-                    </p>
-                    {course.description && (
-                      <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '0.9em' }}>
-                        {course.description}
-                      </p>
-                    )}
-                    <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '0.9em' }}>
-                      Skills: {course.relatedSkills.join(', ')}
-                    </p>
-                  </div>
-                  <div style={{ marginLeft: '20px' }}>
-                    {myPlan.find(item => item.id === course.id) ? (
-                      <div style={{
-                        padding: '8px 16px',
-                        borderRadius: '4px',
-                        backgroundColor: getStatusColor(myPlan.find(item => item.id === course.id).status),
-                        color: 'white',
-                        fontSize: '0.9em'
-                      }}>
-                        {myPlan.find(item => item.id === course.id).status}
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => handleAddToPlan(course)}
-                        style={{
-                          padding: '8px 16px',
-                          cursor: 'pointer',
-                          backgroundColor: '#2196F3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '4px'
-                        }}
-                      >
-                        Add to Plan
-                      </button>
-                    )}
-                  </div>
+                  )}
+                  <p style={{ margin: '0.5rem 0 0 0', color: '#666', fontSize: '0.9em' }}>
+                    Skills: {course.relatedSkills.join(', ')}
+                  </p>
+                </div>
+                <div style={{ minWidth: '120px', textAlign: 'right' }}>
+                  {myPlan.find(item => item.id === course.id) ? (
+                    <div style={{
+                      padding: '8px 16px',
+                      borderRadius: '6px',
+                      backgroundColor: getStatusColor(myPlan.find(item => item.id === course.id).status),
+                      color: 'white',
+                      fontSize: '0.9em',
+                      display: 'inline-block'
+                    }}>
+                      {myPlan.find(item => item.id === course.id).status}
+                    </div>
+                  ) : (
+                    <button onClick={() => handleAddToPlan(course)}>
+                      Add to Plan
+                    </button>
+                  )}
                 </div>
               </div>
             ))
@@ -342,49 +327,41 @@ const Learning = () => {
         </div>
 
         {/* Right sidebar - My Learning Plan */}
-        <div style={{ width: '300px' }}>
+        <div>
           <h2>My Learning Plan</h2>
           {myPlan.map(course => (
             <div
               key={course.id}
-              style={{
-                padding: '15px',
-                marginBottom: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '5px',
-                position: 'relative'
-              }}
+              className="card"
             >
               <button
                 onClick={() => handleRemoveFromPlan(course.id)}
                 style={{
                   position: 'absolute',
-                  right: '5px',
-                  top: '5px',
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '16px',
-                  cursor: 'pointer',
+                  right: '0.5rem',
+                  top: '0.5rem',
+                  padding: '4px 8px',
+                  minWidth: 'auto',
+                  fontSize: '1.2em',
+                  lineHeight: 1,
+                  backgroundColor: 'transparent',
                   color: '#666'
                 }}
               >
                 ×
               </button>
-              <h4 style={{ margin: '0 0 10px 0', paddingRight: '20px' }}>{course.name}</h4>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <h4 style={{ margin: '0 0 1rem 0', paddingRight: '1.5rem' }}>{course.name}</h4>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {['Not Started', 'In Progress', 'Completed'].map(status => (
                   <button
                     key={status}
                     onClick={() => handleStatusChange(course.id, status)}
+                    className={course.status === status ? '' : 'secondary'}
                     style={{
                       flex: 1,
-                      padding: '5px',
-                      backgroundColor: course.status === status ? getStatusColor(status) : '#f5f5f5',
-                      color: course.status === status ? 'white' : '#666',
-                      border: 'none',
-                      borderRadius: '3px',
-                      cursor: 'pointer',
-                      fontSize: '0.8em'
+                      padding: '4px 8px',
+                      fontSize: '0.8em',
+                      minWidth: 'auto'
                     }}
                   >
                     {status}
@@ -394,9 +371,9 @@ const Learning = () => {
             </div>
           ))}
           {myPlan.length === 0 && (
-            <p style={{ color: '#666', textAlign: 'center' }}>
+            <div className="card" style={{ textAlign: 'center', color: '#666' }}>
               No courses added to your plan yet
-            </p>
+            </div>
           )}
         </div>
       </div>

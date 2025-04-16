@@ -29,8 +29,9 @@ const Login = () => {
       // Check if the login was successful based on the "message" property
       if (response?.message === "Login successful.") {
         localStorage.setItem('token', response.token); // Store JWT token
-        console.log('Redirecting to dashboard...');
-        navigate('/dashboard'); // Redirect to dashboard
+        console.log('Login successful, redirecting...');
+        await new Promise(resolve => setTimeout(resolve, 1400)); // Optional: Add a delay before redirecting
+        navigate('/', { replace: true }); // 使用replace以防止返回到登录页
       } else {
         setError(response.message || 'Login failed.');
       }
@@ -42,51 +43,46 @@ const Login = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <form onSubmit={handleSubmit}>
-        <h2>Log In</h2>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Log In'}
-        </button>
-        <p>
-          Forgot your password? <a href="/forgot-password">Reset it here</a>.
-        </p>
-      </form>
-      {/* Back Button */}
-      <button
-        onClick={() => navigate('/')}
-        style={{
-          marginTop: '20px',
-          padding: '10px 20px',
-          fontSize: '16px',
-          cursor: 'pointer',
-        }}
-      >
-        Back
-      </button>
+    <div className="container">
+      <div className="card" style={{ maxWidth: '500px', margin: '50px auto' }}>
+        <h2 style={{ textAlign: 'center' }}>Welcome Back</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <div className="flex gap-4" style={{ marginTop: '2rem' }}>
+            <button type="submit" disabled={loading} style={{ flex: 1 }}>
+              {loading ? 'Logging in...' : 'Log In'}
+            </button>
+            <button type="button" className="secondary" onClick={() => navigate('/')} style={{ flex: 1 }}>
+              Back
+            </button>
+          </div>
+          <p style={{ textAlign: 'center', marginTop: '1rem', color: '#666' }}>
+            Don't have an account? <a href="/signup">Sign up here</a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

@@ -60,44 +60,30 @@ const Dashboard = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('token');
-    navigate('/');
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Optional: Add a delay before redirecting
+    navigate('/login', { replace: true }); // 使用replace以防止返回到dashboard
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container" style={{ textAlign: 'center', paddingTop: '100px' }}>
+        <h2>Loading...</h2>
+      </div>
+    );
   }
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '20px'
-      }}>
+    <div className="container">
+      {/* Header */}
+      <div className="flex flex-between flex-center" style={{ marginBottom: '2rem' }}>
         <h1>Your Skill Dashboard</h1>
-        <div>
-          <button
-            onClick={() => navigate('/learning')}
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: 'pointer',
-              marginRight: '10px'
-            }}
-          >
+        <div className="flex gap-4">
+          <button onClick={() => navigate('/learning')}>
             Learning Resources
           </button>
-          <button
-            onClick={handleLogout}
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
-          >
+          <button className="secondary" onClick={handleLogout}>
             Logout
           </button>
         </div>
@@ -105,56 +91,57 @@ const Dashboard = () => {
 
       {/* Role Tabs */}
       {userRoles.length > 0 && (
-        <div style={{ 
-          display: 'flex', 
-          gap: '10px', 
-          marginBottom: '20px',
-          overflowX: 'auto',
-          padding: '10px 0'
-        }}>
-          {userRoles.map(role => (
+        <div className="card" style={{ marginBottom: '2rem', padding: '1rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: '1rem',
+            overflowX: 'auto',
+            padding: '0.5rem'
+          }}>
+            {userRoles.map(role => (
+              <button
+                key={role.id}
+                onClick={() => handleRoleChange(role.id)}
+                className={selectedRoleId === role.id ? '' : 'secondary'}
+                style={{
+                  minWidth: '150px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0.8rem 1.5rem',
+                  borderRadius: '2rem'
+                }}
+              >
+                {role.title}
+              </button>
+            ))}
             <button
-              key={role.id}
-              onClick={() => handleRoleChange(role.id)}
+              onClick={handleAddNewRole}
+              className="secondary"
               style={{
-                padding: '10px 20px',
-                fontSize: '14px',
-                cursor: 'pointer',
-                backgroundColor: selectedRoleId === role.id ? '#4CAF50' : '#f0f0f0',
-                color: selectedRoleId === role.id ? 'white' : 'black',
-                border: 'none',
-                borderRadius: '20px',
-                minWidth: '150px'
+                minWidth: '150px',
+                borderRadius: '2rem',
+                borderStyle: 'dashed'
               }}
             >
-              <div>{role.title}</div>
+              + Add New Role
             </button>
-          ))}
-          <button
-            onClick={handleAddNewRole}
-            style={{
-              padding: '10px 20px',
-              fontSize: '14px',
-              cursor: 'pointer',
-              backgroundColor: '#e0e0e0',
-              border: 'none',
-              borderRadius: '20px'
-            }}
-          >
-            + Add New Role
-          </button>
+          </div>
         </div>
       )}
       
-      {showRoleSelection ? (
-        userId && <RoleSelection 
-          userId={userId} 
-          onRoleSelect={handleRoleSelect}
-          onRoleClick={handleRoleClick}
-        />
-      ) : (
-        userId && selectedRoleId && <SkillGapAnalysis userId={userId} roleId={selectedRoleId} />
-      )}
+      {/* Main Content */}
+      <div className="card">
+        {showRoleSelection ? (
+          userId && <RoleSelection 
+            userId={userId} 
+            onRoleSelect={handleRoleSelect}
+            onRoleClick={handleRoleClick}
+          />
+        ) : (
+          userId && selectedRoleId && <SkillGapAnalysis userId={userId} roleId={selectedRoleId} />
+        )}
+      </div>
     </div>
   );
 };

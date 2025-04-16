@@ -58,75 +58,92 @@ const RoleSelection = ({ userId, onRoleSelect, onRoleClick }) => {
   };
 
   return (
-    <div style={{ textAlign: 'left', marginTop: '20px' }}>
-      <h3>Add New Role</h3>
-      <div style={{ marginBottom: '20px' }}>
-        <select 
-          value={selectedRole} 
-          onChange={handleRoleSelect}
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            width: '300px',
-            marginRight: '10px'
-          }}
-        >
-          <option value="">Select a role...</option>
-          {roles.map(role => (
-            <option key={role.id} value={role.id}>
-              {role.title}
-            </option>
-          ))}
-        </select>
-        <button 
-          onClick={handleConfirm}
-          style={{
-            padding: '10px 20px',
-            fontSize: '16px'
-          }}
-        >
-          Confirm Selection
-        </button>
+    <div style={{ padding: '1rem' }}>
+      <div className="flex flex-between flex-center" style={{ marginBottom: '2rem' }}>
+        <h3 style={{ margin: 0 }}>Add New Role</h3>
+        <div className="flex gap-4">
+          <select 
+            value={selectedRole} 
+            onChange={handleRoleSelect}
+            style={{ margin: 0, minWidth: '250px' }}
+          >
+            <option value="">Select a role...</option>
+            {roles.map(role => (
+              <option key={role.id} value={role.id}>
+                {role.title}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleConfirm} disabled={!selectedRole}>
+            Add Role
+          </button>
+        </div>
       </div>
 
       {currentRole && (
-        <div style={{ marginTop: '20px' }}>
+        <div>
           <h3>{currentRole.title}</h3>
-          <p>{currentRole.description}</p>
+          <p style={{ color: '#666', marginBottom: '2rem' }}>{currentRole.description}</p>
           
-          <div style={{ marginTop: '15px' }}>
-            <h4>Required Skills</h4>
-            {Object.entries(currentRole.requiredSkills).map(([skill, level]) => (
-              <div key={skill} style={{ 
-                padding: '10px',
-                margin: '5px 0',
-                backgroundColor: '#f5f5f5',
-                borderRadius: '5px'
-              }}>
-                <strong>{skill}</strong> - Required Level: {level}
-                <p><small>{currentRole.skillDescriptions[skill]}</small></p>
-              </div>
-            ))}
+          <div className="card" style={{ marginBottom: '1.5rem' }}>
+            <h4 style={{ marginTop: 0 }}>Required Skills</h4>
+            <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
+              {Object.entries(currentRole.requiredSkills).map(([skill, level]) => (
+                <div key={skill} style={{ 
+                  padding: '1rem',
+                  backgroundColor: '#f0f9ff',
+                  borderRadius: '8px',
+                  border: '1px solid #e0f2fe'
+                }}>
+                  <div className="flex flex-between" style={{ flexDirection: 'column' }}>
+                    <strong>{skill}</strong>
+                    <span style={{ 
+                      color: '#0369a1', 
+                      fontSize: '0.9em',
+                      marginTop: '0.5rem'
+                    }}>
+                      Required Level: {level}
+                    </span>
+                  </div>
+                  <p style={{ margin: '0.5rem 0 0 0', color: '#666', fontSize: '0.9em' }}>
+                    {currentRole.skillDescriptions[skill]}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div style={{ marginTop: '15px' }}>
-            <h4>Optional Skills</h4>
-            {Object.entries(currentRole.optionalSkills).map(([skill, level]) => (
-              <div key={skill} style={{ 
-                padding: '10px',
-                margin: '5px 0',
-                backgroundColor: '#e8f4f8',
-                borderRadius: '5px'
-              }}>
-                <strong>{skill}</strong> - Recommended Level: {level}
-                <p><small>{currentRole.skillDescriptions[skill]}</small></p>
-              </div>
-            ))}
+          <div className="card">
+            <h4 style={{ marginTop: 0 }}>Optional Skills</h4>
+            <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
+              {Object.entries(currentRole.optionalSkills).map(([skill, level]) => (
+                <div key={skill} style={{ 
+                  padding: '1rem',
+                  backgroundColor: '#f8fafc',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  <div className="flex flex-between" style={{ flexDirection: 'column' }}>
+                    <strong>{skill}</strong>
+                    <span style={{ 
+                      color: '#64748b',
+                      fontSize: '0.9em',
+                      marginTop: '0.5rem'
+                    }}>
+                      Recommended Level: {level}
+                    </span>
+                  </div>
+                  <p style={{ margin: '0.5rem 0 0 0', color: '#666', fontSize: '0.9em' }}>
+                    {currentRole.skillDescriptions[skill]}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

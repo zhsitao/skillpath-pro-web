@@ -5,32 +5,20 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Welcome to SkillPath Pro</h1>
-      <p>Please choose an option:</p>
-      <div>
-        <button
-          onClick={() => navigate('/signup')}
-          style={{
-            margin: '10px',
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer',
-          }}
-        >
-          Sign Up
-        </button>
-        <button
-          onClick={() => navigate('/login')}
-          style={{
-            margin: '10px',
-            padding: '10px 20px',
-            fontSize: '16px',
-            cursor: 'pointer',
-          }}
-        >
-          Log In
-        </button>
+    <div className="container">
+      <div className="card" style={{ maxWidth: '600px', margin: '100px auto', textAlign: 'center' }}>
+        <h1>Welcome to SkillPath Pro</h1>
+        <p style={{ fontSize: '1.1em', color: '#666', marginBottom: '2rem' }}>
+          Start your professional development journey today with personalized learning paths and skill tracking.
+        </p>
+        <div className="flex gap-4" style={{ justifyContent: 'center' }}>
+          <button onClick={() => navigate('/signup')}>
+            Sign Up
+          </button>
+          <button className="secondary" onClick={() => navigate('/login')}>
+            Log In
+          </button>
+        </div>
       </div>
     </div>
   );
