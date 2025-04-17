@@ -20,7 +20,7 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
 
   const fetchGapAnalysis = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/roles/${roleId}/gap-analysis`);
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/roles/${roleId}/gap-analysis`);
       const data = await response.json();
       setAnalysis(data);
     } catch (err) {
@@ -30,7 +30,7 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
 
   const fetchUserSkills = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/skills`);
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/skills`);
       const data = await response.json();
       setUserSkills(data);
     } catch (err) {
@@ -61,7 +61,7 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
         proficiency: skill.proficiency
       }));
 
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/skills`, {
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/skills`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
         proficiency: skill.proficiency
       }));
 
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/skills`, {
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/skills`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
         proficiency: skill.proficiency
       }));
 
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/skills`, {
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/skills`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

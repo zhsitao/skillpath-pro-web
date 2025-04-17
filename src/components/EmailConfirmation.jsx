@@ -18,7 +18,7 @@ const EmailConfirmation = () => {
 
   const verifyEmail = async (token) => {
     try {
-      const response = await fetch('http://localhost:8080/auth/confirm', {
+      const response = await fetch('http://104.197.224.247:8080/auth/confirm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),

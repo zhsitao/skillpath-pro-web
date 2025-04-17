@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   const fetchUserRoles = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/roles`);
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/roles`);
       if (response.ok) {
         const roles = await response.json();
         setUserRoles(roles);

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://104.197.224.247:8080';
 
 export const signup = async (data) => {
   try {

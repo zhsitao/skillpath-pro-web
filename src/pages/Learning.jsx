@@ -39,7 +39,7 @@ const Learning = () => {
 
   const fetchUserRoleAndGaps = async () => {
     try {
-      const rolesResponse = await fetch(`http://localhost:8080/api/users/${userId}/roles`);
+      const rolesResponse = await fetch(`http://104.197.224.247:8080/api/users/${userId}/roles`);
       if (!rolesResponse.ok) return;
       const roles = await rolesResponse.json();
 
@@ -51,7 +51,7 @@ const Learning = () => {
       const roleId = roles[0].id;
       setSelectedRoleId(roleId);
 
-      const gapsResponse = await fetch(`http://localhost:8080/api/users/${userId}/roles/${roleId}/gap-analysis`);
+      const gapsResponse = await fetch(`http://104.197.224.247:8080/api/users/${userId}/roles/${roleId}/gap-analysis`);
       if (!gapsResponse.ok) return;
       const gapsData = await gapsResponse.json();
 
@@ -68,7 +68,7 @@ const Learning = () => {
 
   const fetchResources = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/learning/resources?freeOnly=${freeOnly}`);
+      const response = await fetch(`http://104.197.224.247:8080/api/learning/resources?freeOnly=${freeOnly}`);
       if (response.ok) {
         const data = await response.json();
         setCourses(data);
@@ -88,7 +88,7 @@ const Learning = () => {
 
   const fetchUserPlan = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/learning/users/${userId}/plan`);
+      const response = await fetch(`http://104.197.224.247:8080/api/learning/users/${userId}/plan`);
       if (response.ok) {
         const data = await response.json();
         setMyPlan(data);
@@ -102,7 +102,7 @@ const Learning = () => {
     if (!myPlan.find(item => item.id === course.id)) {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/learning/users/${userId}/plan/${course.id}`,
+          `http://104.197.224.247:8080/api/learning/users/${userId}/plan/${course.id}`,
           { method: 'POST' }
         );
         if (response.ok) {
@@ -117,7 +117,7 @@ const Learning = () => {
   const handleStatusChange = async (courseId, newStatus) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/learning/users/${userId}/plan/${courseId}`,
+        `http://104.197.224.247:8080/api/learning/users/${userId}/plan/${courseId}`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -135,7 +135,7 @@ const Learning = () => {
   const handleRemoveFromPlan = async (courseId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/learning/users/${userId}/plan/${courseId}`,
+        `http://104.197.224.247:8080/api/learning/users/${userId}/plan/${courseId}`,
         { method: 'DELETE' }
       );
       if (response.ok) {

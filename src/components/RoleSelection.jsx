@@ -14,7 +14,7 @@ const RoleSelection = ({ userId, onRoleSelect, onRoleClick }) => {
 
   const fetchRoles = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/roles?userId=${userId}`);
+      const response = await fetch(`http://104.197.224.247:8080/api/roles?userId=${userId}`);
       const data = await response.json();
       setRoles(data);
     } catch (err) {
@@ -27,7 +27,7 @@ const RoleSelection = ({ userId, onRoleSelect, onRoleClick }) => {
     setSelectedRole(roleId);
     
     try {
-      const response = await fetch(`http://localhost:8080/api/roles/${roleId}`);
+      const response = await fetch(`http://104.197.224.247:8080/api/roles/${roleId}`);
       const role = await response.json();
       setCurrentRole(role);
       if (onRoleClick) {
@@ -45,7 +45,7 @@ const RoleSelection = ({ userId, onRoleSelect, onRoleClick }) => {
     }
     
     try {
-      const response = await fetch(`http://localhost:8080/api/users/${userId}/roles/${selectedRole}`, {
+      const response = await fetch(`http://104.197.224.247:8080/api/users/${userId}/roles/${selectedRole}`, {
         method: 'POST',
       });
       
