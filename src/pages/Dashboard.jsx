@@ -67,8 +67,7 @@ const Dashboard = () => {
   const handleLogout = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Optional: Add a delay before redirecting
-    navigate('/login', { replace: true }); // 使用replace以防止返回到dashboard
+    navigate('/login', { replace: true }); // Use replace to prevent returning to the dashboard
   };
 
   if (isLoading) {

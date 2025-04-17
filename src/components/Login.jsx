@@ -9,7 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // 检查是否已登录，如果已登录直接跳转到dashboard
+  // Check if already logged in, if so, directly navigate to the dashboard
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');

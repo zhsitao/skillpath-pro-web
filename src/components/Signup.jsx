@@ -33,7 +33,7 @@ const Signup = () => {
       const response = await signup({ email, password });
       if (response?.success) {
         setSuccess(true);
-        // 在2秒后自动跳转到登录页面
+        // Automatically redirect to the login page after 2 seconds
         setTimeout(() => {
           navigate('/login', { replace: true });
         }, 2000);
