@@ -27,15 +27,20 @@ export const login = async (data) => {
       body: JSON.stringify(data),
     });
 
+    const responseData = await response.json();
+
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || 'Login request failed.');
+      throw new Error(responseData.error || 'Login request failed.');
     }
 
-    return await response.json(); // Ensure the response is parsed as JSON
+    if (!responseData.token || !responseData.userId) {
+      throw new Error('Invalid response from server');
+    }
+
+    return responseData;
   } catch (error) {
     console.error('Login API error:', error);
-    return { success: false, message: error.message || 'Network error' };
+    throw error;
   }
 };
 

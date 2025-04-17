@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SkillGapAnalysis = ({ userId, roleId }) => {
   const [analysis, setAnalysis] = useState(null);
@@ -6,8 +7,13 @@ const SkillGapAnalysis = ({ userId, roleId }) => {
   const [proficiency, setProficiency] = useState('BEGINNER');
   const [userSkills, setUserSkills] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!userId) {
+      navigate('/login');
+      return;
+    }
     fetchGapAnalysis();
     fetchUserSkills();
   }, [userId, roleId]);

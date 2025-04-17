@@ -8,6 +8,20 @@ import EmailConfirmation from './components/EmailConfirmation';
 import Learning from './pages/Learning';
 
 function App() {
+  const isAuthenticated = () => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    return token && userId;
+  };
+
+  const PrivateRoute = ({ children }) => {
+    return isAuthenticated() ? children : <Navigate to="/login" />;
+  };
+
+  const PublicRoute = ({ children }) => {
+    return !isAuthenticated() ? children : <Navigate to="/dashboard" />;
+  };
+
   return (
     <div style={{ 
       minHeight: '100vh',
@@ -16,17 +30,32 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={
-            localStorage.getItem('token') ? <Navigate to="/dashboard" /> : <HomePage />
+            <PublicRoute>
+              <HomePage />
+            </PublicRoute>
           } />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={
+            <PublicRoute>
+              <SignupPage />
+            </PublicRoute>
+          } />
+          <Route path="/login" element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          } />
           <Route path="/dashboard" element={
-            localStorage.getItem('token') ? <Dashboard /> : <Navigate to="/login" />
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          } />
+          <Route path="/learning" element={
+            <PrivateRoute>
+              <Learning />
+            </PrivateRoute>
           } />
           <Route path="/confirm" element={<EmailConfirmation />} />
-          <Route path="/learning" element={
-            localStorage.getItem('token') ? <Learning /> : <Navigate to="/login" />
-          } />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </div>

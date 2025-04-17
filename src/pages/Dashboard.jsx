@@ -12,9 +12,13 @@ const Dashboard = () => {
   const [showRoleSelection, setShowRoleSelection] = useState(true);
 
   useEffect(() => {
-    // In a real app, you would decode the JWT token to get the user ID
-    setUserId(1);
-  }, []);
+    const storedUserId = localStorage.getItem('userId');
+    if (!storedUserId) {
+      navigate('/login');
+      return;
+    }
+    setUserId(parseInt(storedUserId));
+  }, [navigate]);
 
   useEffect(() => {
     if (userId === null) return;
@@ -62,6 +66,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     await new Promise(resolve => setTimeout(resolve, 1000)); // Optional: Add a delay before redirecting
     navigate('/login', { replace: true }); // 使用replace以防止返回到dashboard
   };

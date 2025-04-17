@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { login } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,15 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // 检查是否已登录，如果已登录直接跳转到dashboard
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    if (token && userId) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [navigate]);
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -24,18 +33,17 @@ const Login = () => {
 
     try {
       const response = await login({ email, password });
-      console.log('Login response:', response); // Log the response for debugging
+      console.log('Login response:', response);
 
-      // Check if the login was successful based on the "message" property
-      if (response?.message === "Login successful.") {
-        localStorage.setItem('token', response.token); // Store JWT token
-        console.log('Login successful, redirecting...');
-        await new Promise(resolve => setTimeout(resolve, 1400)); // Optional: Add a delay before redirecting
-        navigate('/', { replace: true }); // 使用replace以防止返回到登录页
+      if (response?.token && response?.userId) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        navigate('/dashboard', { replace: true });
       } else {
-        setError(response.message || 'Login failed.');
+        setError(response.error || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError(err.message || 'An unexpected error occurred.');
     } finally {
       setLoading(false);

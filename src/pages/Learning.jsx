@@ -7,13 +7,22 @@ const Learning = () => {
   const [courses, setCourses] = useState([]);
   const [myPlan, setMyPlan] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userId] = useState(1); // In a real app, get this from authentication
   const [selectedSkill, setSelectedSkill] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [maxDuration, setMaxDuration] = useState('');
   const [allSkills, setAllSkills] = useState([]);
   const [skillGaps, setSkillGaps] = useState([]);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
+
+  // Get userId from localStorage
+  const [userId] = useState(() => {
+    const id = localStorage.getItem('userId');
+    if (!id) {
+      navigate('/login');
+      return null;
+    }
+    return parseInt(id);
+  });
 
   const courseTypes = ['Course', 'Certification'];
 
@@ -333,6 +342,7 @@ const Learning = () => {
             <div
               key={course.id}
               className="card"
+              style={{ position: 'relative' }}
             >
               <button
                 onClick={() => handleRemoveFromPlan(course.id)}
@@ -345,7 +355,9 @@ const Learning = () => {
                   fontSize: '1.2em',
                   lineHeight: 1,
                   backgroundColor: 'transparent',
-                  color: '#666'
+                  border: 'none',
+                  color: '#666',
+                  cursor: 'pointer'
                 }}
               >
                 ×

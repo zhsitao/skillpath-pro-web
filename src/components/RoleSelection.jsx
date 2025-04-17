@@ -7,8 +7,10 @@ const RoleSelection = ({ userId, onRoleSelect, onRoleClick }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchRoles();
-  }, []);
+    if (userId) {
+      fetchRoles();
+    }
+  }, [userId]);
 
   const fetchRoles = async () => {
     try {
